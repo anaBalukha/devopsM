@@ -1,0 +1,7 @@
+package com.midterm.anaBalukha.repository;
+
+import com.midterm.anaBalukha.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+}
