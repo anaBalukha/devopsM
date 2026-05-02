@@ -2,10 +2,11 @@
 
 echo "Starting DevOps setup..."
 
-cd ../anaBalukha/anaBalukha
+# Go to correct project directory
+cd "$(dirname "$0")/../anaBalukha" || exit
 
 echo "Building project..."
-mvn clean install
+./mvnw clean install
 
 echo "Running application..."
-mvn spring-boot:run
+./mvnw spring-boot:run
