@@ -7,8 +7,10 @@ demonstrate how modern software development workflows can be organized using Dev
 repeatable way. The application itself is built using Java and Spring Boot framework. I followed a layered architecture 
 approach where each part of the system has a clear responsibility. The controller layer is responsible for handling 
 HTTP requests, the service layer contains the core business logic of the application, and the repository layer is 
-responsible for interacting with the database. This structure helps to keep the project clean, organized, and 
-easier to maintain.
+responsible for interacting with the database.The application includes dynamic REST endpoints such as 
+GET /users/{id} and POST /users, which allow retrieving and creating data dynamically based on user input. 
+This ensures that the application satisfies the requirement of having both dynamic routes and input-based endpoints.
+This structure helps to keep the project clean, organized, and easier to maintain.
 During development, I also used Git as a version control system and maintained two separate branches: main and dev. 
 The main branch represents the stable version of the application, while the dev branch was used for active development 
 and testing new changes before merging them into the main branch.
@@ -60,6 +62,10 @@ The CI pipeline performs the following steps:
              3. It builds the project using Maven
              4. It runs all unit tests to ensure correctness
 
+In addition to building and testing, I included a linting step in the CI pipeline using Maven plugins 
+to ensure consistent code quality and formatting. This step runs automatically together with the build 
+and test process during each pipeline execution.
+
 ![CI Pipeline Success](images/ci-success.png)
 
 # Infrastructure as Code (IaC) & Automation
@@ -71,13 +77,19 @@ of being done manually. The scripts include:
                                   2. blue.sh → simulates blue deployment
                                   3. green.sh → simulates green deployment
                                   4. rollback.sh → restores previous stable version
-These scripts can be executed using a single command in terminal and they automate repetitive tasks 
-such as building and running the application.
 
 ![IaC Scripts Execution](images/photo1.png)
 ![IaC Scripts Execution](images/photo2.png)
 ![IaC Scripts Execution](images/photo3.png)
 ![IaC Scripts Execution](images/photo4.png)
+
+These scripts can be executed using a single command in terminal and they automate repetitive tasks
+such as building and running the application.
+I manually executed the CI process locally using Maven. The build process compiles the code, 
+runs all unit tests, and verifies that the application is working correctly. This step helps confirm 
+that the CI pipeline configuration is valid even outside of GitHub Actions.
+![Maven Build Success](images/maven1.png)
+![Maven Build Success](images/maven2.png)
 
 # Continuous Deployment (Blue-Green Deployment)
 
@@ -107,6 +119,9 @@ application stability.
 
 ![Health Check Logs](images/health-check.png)
 
+The health check script sends HTTP requests to the running application 
+(e.g., http://localhost:8080) and logs whether the service is reachable.
+
 
 # API Testing (Swagger UI)
 
@@ -116,3 +131,37 @@ through a web interface. because Swagger provides: List of all endpoints, Reques
 Ability to test APIs directly in browser
 
 ![Swagger UI](images/swagger.png) 
+
+
+# # Step-by-Step Execution Guide to fully run this project and demonstrate all DevOps components:
+
+1. Clone the repository:
+   git clone https://github.com/anaBalukha/devopsM.git
+   cd devopsM
+2. Switch to development branch:
+   git checkout dev
+3. Run Infrastructure Setup Script:
+   bash scripts/setup.sh -> This script prepares the environment and builds the application automatically.
+4. Run Blue Deployment:
+   bash deployment/blue.sh -> This starts the application in the blue environment.
+
+5. Open the application in browser:
+   http://localhost:8080/swagger-ui/index.html
+This confirms that the application is running successfully.
+
+6. Run Green Deployment (optional):
+   bash deployment/green.sh  -> This simulates deployment of a new version.
+
+7. Run Rollback:
+   bash deployment/rollback.sh -> This switches back to the previous stable version.
+
+8. Run Health Check Monitoring:
+   bash monitoring/health-check.sh
+This continuously checks application status and writes logs to a file.
+
+# # CI/CD Workflow Diagram
+
+Developer → Git Push → GitHub Repository → GitHub Actions CI Pipeline →
+(Build + Test + Lint) → Deployment Scripts (Blue/Green) →
+Running Application (Local Production) → Health Check Monitoring → Logs
+
