@@ -1,8 +1,9 @@
 #!/bin/bash
 
-echo "ROLLBACK TRIGGERED..."
+echo "Rolling back deployment..."
 
-cd ../anaBalukha/anaBalukha
+cd "$(dirname "$0")/../anaBalukha/anaBalukha" || exit
 
-echo "Reverting to previous stable version..."
-mvn spring-boot:run
+echo "Restoring previous version..."
+
+cmd.exe /c mvn clean install

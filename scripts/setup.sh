@@ -2,11 +2,11 @@
 
 echo "Starting DevOps setup..."
 
-# Go to correct Spring Boot project folder
+# Always move relative to script location
 cd "$(dirname "$0")/../anaBalukha/anaBalukha" || exit
 
 echo "Building project..."
-./mvnw clean install
+cmd.exe /c mvn clean install
 
 echo "Running application..."
-./mvnw spring-boot:run
+cmd.exe /c mvn spring-boot:run
