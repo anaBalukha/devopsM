@@ -61,3 +61,58 @@ The CI pipeline performs the following steps:
              4. It runs all unit tests to ensure correctness
 
 ![CI Pipeline Success](images/ci-success.png)
+
+# Infrastructure as Code (IaC) & Automation
+I created Bash scripts that automate the setup and execution of the project. 
+These scripts simulate environment preparation and deployment processes.
+The main purpose of these scripts is to demonstrate how infrastructure tasks can be automated instead 
+of being done manually. The scripts include:
+                                  1. setup.sh → prepares environment and builds project
+                                  2. blue.sh → simulates blue deployment
+                                  3. green.sh → simulates green deployment
+                                  4. rollback.sh → restores previous stable version
+These scripts can be executed using a single command in terminal and they automate repetitive tasks 
+such as building and running the application.
+
+![IaC Scripts Execution](images/photo1.png)
+![IaC Scripts Execution](images/photo2.png)
+![IaC Scripts Execution](images/photo3.png)
+![IaC Scripts Execution](images/photo4.png)
+
+# Continuous Deployment (Blue-Green Deployment)
+
+I implemented a Blue-Green deployment simulation to demonstrate how modern applications can be updated 
+without downtime. In this approach, two versions of the application exist:
+      1. Blue environment → current stable version
+      2. Green environment → new version being tested or deployed
+and by switching between these environments, I simulate how updates can be deployed safely without 
+stopping the application.
+Additionally, I implemented a rollback script which allows reverting back to a previous stable version 
+in case of failure or unexpected behavior happens.
+
+![Blue Green Deployment](images/photoA.png)
+![Blue Green Deployment](images/photoB.png)
+![Blue Green Deployment](images/photoC.png)
+![Blue Green Deployment](images/photoD.png)
+![Blue Green Deployment](images/photoE.png)
+![Blue Green Deployment](images/photoF.png)
+
+# Monitoring & Health Check
+
+I created a simple monitoring system using a Bash script that checks whether the application is running 
+or not. The script sends periodic requests to the application and logs the status into a file, which 
+allows tracking whether the application is healthy over time.
+The health check results are stored in a log file, which can later be analyzed to understand 
+application stability.
+
+![Health Check Logs](images/health-check.png)
+
+
+# API Testing (Swagger UI)
+
+Swagger UI was integrated into the project to provide an easy way of testing REST API endpoints. 
+Instead of using external tools like Postman, all endpoints can be tested directly 
+through a web interface. because Swagger provides: List of all endpoints, Request/response structure and 
+Ability to test APIs directly in browser
+
+![Swagger UI](images/swagger.png) 
